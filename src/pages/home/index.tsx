@@ -1,45 +1,92 @@
-import { Container, Button, Grid } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { characters } from '../../api/characters';
-import { CardComponent, HeaderComponent } from '../../components';
-import { useNotification } from '../../context/notification.context';
-import { TypeCharacter } from './homa.types';
+import React from "react";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  Grid,
+  Pagination,
+} from "@mui/material";
+import { CardComponent, HeaderComponent } from "../../components";
+import { characters } from "../../api/characters";
+import { TypeCharacter } from "./home.types";
 
 export const HomePage: React.FC<{}> = () => {
-    const [allCharacters, setAllCharacters] = useState<TypeCharacter[] | null>(null)
-    const {getSuccess} = useNotification()
-    const handleClick = () => {
-        getSuccess("Hola mundo")
-    }
+  const [page, setPage] = React.useState(1);
+  const [count, setCount] = React.useState(1);
+  const [allCharacters, setAllCharacters] = React.useState<
+    TypeCharacter[] | null
+  >(null);
+  const [loading, setLoading] = React.useState<boolean>(true);
 
-    useEffect(() => {
-      characters.getAll({ page: 1 }).then((r) => {
-        setAllCharacters(r.data.results)
-      }).catch((e) => {
-        console.error(e)
+  React.useEffect(() => {
+    setLoading(true);
+    characters
+      .getAll({ page })
+      .then((r) => {
+        setCount(r.data.info.pages);
+        setAllCharacters(r.data.results);
+        setTimeout(() => setLoading(false), 1000);
       })
-    }, [])
+      .catch((e) => {
+        console.error(e);
+      });
+  }, [page]);
 
-    return (
-        <Container maxWidth="xl">
-            <HeaderComponent title="Hola Mundo" description="Bienvenido" element={
-                <Button variant="contained" onClick={handleClick} fullWidth>
-                    Estamos en Home
-                </Button>
-            }/>
-            <div>
-                {
-                allCharacters?.length !== 0 ? (
-                    <Grid container spacing={2} direction="row">
-                    {allCharacters?.map((character) => (
-                        <Grid item xs={3} key={character.id} >
-                            <CardComponent image={character.image} name={character.name} species={character.species} status={character.status} />
-                        </Grid>
-                    ))}
-                    </Grid>
-                ) : ""
-                }
-            </div>
-        </Container>
-    )
-}
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
+  return (
+    <Container maxWidth="xl">
+      <HeaderComponent
+        title="Hola Mundo"
+        description="Bienvenido"
+        element={
+          <Button fullWidth variant="contained">
+            Hola mundo
+          </Button>
+        }
+      />
+      {loading ? (
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <>
+          <div>
+            {allCharacters!.length !== 0 ? (
+              <Grid sx={{ my: 2 }} container spacing={2} direction="row">
+                {allCharacters!.map((character) => (
+                  <Grid item xs={3} key={character.id}>
+                    <CardComponent
+                      image={character.image}
+                      name={character.name}
+                      species={character.species}
+                      status={character.status}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+            ) : (
+              "No data"
+            )}
+          </div>
+          <Box
+            sx={{ width: "100%", display: "flex", justifyContent: "center" }}
+          >
+            <Pagination
+              variant="outlined"
+              color="primary"
+              count={count}
+              page={page}
+              onChange={handleChange}
+              sx={{ mb: 3 }}
+              size="large"
+            />
+          </Box>
+        </>
+      )}
+    </Container>
+  );
+};
