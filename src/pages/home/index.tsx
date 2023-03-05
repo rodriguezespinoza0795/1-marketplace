@@ -2,9 +2,9 @@ import { Container, Button } from '@mui/material';
 import { useNotification } from '../../context/notification.context';
 
 export const HomePage: React.FC<{}> = () => {
-    const {getError} = useNotification()
+    const {getSuccess} = useNotification()
     const handleClick = () => {
-        getError("Hola mundo")
+        getSuccess("Hola mundo")
     }
     return (
         <Container sx={{mt:9}} maxWidth="xl">
