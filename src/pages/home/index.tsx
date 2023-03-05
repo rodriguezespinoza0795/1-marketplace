@@ -1,4 +1,5 @@
 import { Container, Button } from '@mui/material';
+import { HeaderComponent } from '../../components';
 import { useNotification } from '../../context/notification.context';
 
 export const HomePage: React.FC<{}> = () => {
@@ -7,10 +8,12 @@ export const HomePage: React.FC<{}> = () => {
         getSuccess("Hola mundo")
     }
     return (
-        <Container sx={{mt:9}} maxWidth="xl">
-            <Button variant="contained" onClick={handleClick}>
-                Estamos en Home
-            </Button>
+        <Container maxWidth="xl">
+            <HeaderComponent title="Hola Mundo" description="Bienvenido" element={
+                <Button variant="contained" onClick={handleClick} fullWidth>
+                    Estamos en Home
+                </Button>
+            }/>
         </Container>
     )
 }
