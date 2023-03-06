@@ -14,9 +14,7 @@ import { TypeCharacter } from "../../types";
 export const HomePage: React.FC<{}> = () => {
   const [page, setPage] = React.useState(1);
   const [count, setCount] = React.useState(1);
-  const [allCharacters, setAllCharacters] = React.useState<
-    TypeCharacter[] | null
-  >(null);
+  const [allCharacters, setAllCharacters] = React.useState<TypeCharacter[] | null>(null);
   const [loading, setLoading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
@@ -57,7 +55,7 @@ export const HomePage: React.FC<{}> = () => {
           <div>
             {allCharacters!.length !== 0 ? (
               <Grid sx={{ my: 2 }} container spacing={2} direction="row">
-                {allCharacters!.map((character) => (
+                {allCharacters?.map((character) => (
                   <Grid item xs={3} key={character.id}>
                     <CardComponent
                       image={character.image}
