@@ -1,4 +1,4 @@
-import './App.css';
+import { Suspense } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { AppRouter } from './Router';
 import { NotificationProvider } from './context/notification.context';
@@ -10,7 +10,9 @@ function App() {
     <NotificationProvider>
       <Provider store={store}>
         <BrowserRouter>
-          <AppRouter/>
+          <Suspense fallback={'Cargando...'} >
+            <AppRouter/>
+          </Suspense>
         </BrowserRouter>
       </Provider>
     </NotificationProvider>

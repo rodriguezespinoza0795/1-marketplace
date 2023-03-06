@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom"
 import { characters } from "../../api/characters"
 import { TypeCharacter } from "../../types"
 
-export const CharacterPage: React.FC<{}> = () => {
+const CharacterPage: React.FC<{}> = () => {
     const { id } = useParams()
     const [loading, setLoading] = useState<boolean>(true)
     const [character, setCharacter] = useState<TypeCharacter | null>()
@@ -45,3 +45,5 @@ export const CharacterPage: React.FC<{}> = () => {
         </Box>
     )
 }
+
+export default CharacterPage;

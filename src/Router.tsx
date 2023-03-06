@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom"
 import { RouterLayout } from "./common"
-import { HomePage, LoginPage } from "./pages"
-import { CharacterPage } from "./pages"
+import { HomePage, LoginPage, CharacterPage } from "./pages"
 
 export const AppRouter: React.FC<{}> = () => {
     return (
