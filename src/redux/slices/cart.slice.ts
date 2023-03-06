@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import { getItem } from '../../utils/localStorage';
 
 interface CartAddState {
     id: string | number,
@@ -13,7 +14,7 @@ interface CartRemoveState {
 }
 
 // Define the initial state using that type
-const initialState: CartAddState[] = []
+const initialState: CartAddState[] = getItem('cart') || [];
 
 export const cartSlice = createSlice({
   name: 'cart',
