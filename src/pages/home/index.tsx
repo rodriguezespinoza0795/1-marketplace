@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { CardComponent, HeaderComponent } from "../../components";
 import { characters } from "../../api/characters";
-import { TypeCharacter } from "./home.types";
+import { TypeCharacter } from "../../types";
 
 export const HomePage: React.FC<{}> = () => {
   const [page, setPage] = React.useState(1);
@@ -64,6 +64,7 @@ export const HomePage: React.FC<{}> = () => {
                       name={character.name}
                       species={character.species}
                       status={character.status}
+                      id={character.id}
                     />
                   </Grid>
                 ))}
